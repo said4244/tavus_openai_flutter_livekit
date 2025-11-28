@@ -1,0 +1,37 @@
+name: tavus_avatar_flutter
+description: Flutter package for easy integration with Tavus interactive avatars using LiveKit and OpenAI Realtime API
+version: 0.1.0
+homepage: https://github.com/yourusername/tavus_avatar_flutter
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # LiveKit for WebRTC connection
+  livekit_client: ^2.4.7
+  
+  # HTTP for token fetching
+  http: ^1.4.0
+  
+  # Logging
+  logger: ^2.5.0
+  
+  # Web support
+  web: ^1.1.1
+  flutter_webrtc: ^0.14.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  plugin:
+    platforms:
+      web:
+        pluginClass: TavusAvatarFlutterWeb
+        fileName: tavus_avatar_flutter_web.dart

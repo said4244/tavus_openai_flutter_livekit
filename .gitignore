@@ -1,0 +1,21 @@
+# Flutter/Dart specific
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+.pub-cache/
+.pub/
+.idea/
+*.iml
+
+# Environment files
+server/.env
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+
+# System files
+.DS_Store

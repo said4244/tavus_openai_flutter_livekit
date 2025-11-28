@@ -1,0 +1,29 @@
+Metadata-Version: 2.4
+Name: livekit-plugins-tavus
+Version: 1.0.23
+Summary: Agent Framework plugin for Tavus
+Project-URL: Documentation, https://docs.livekit.io
+Project-URL: Website, https://livekit.io/
+Project-URL: Source, https://github.com/livekit/agents
+Author-email: LiveKit <support@livekit.io>
+License-Expression: Apache-2.0
+Keywords: audio,livekit,realtime,video,webrtc
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Topic :: Multimedia :: Sound/Audio
+Classifier: Topic :: Multimedia :: Video
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.9.0
+Requires-Dist: livekit-agents>=1.0.23
+Description-Content-Type: text/markdown
+
+# Tavus virtual avatar plugin for LiveKit Agents
+
+Support for the [Tavus](https://tavus.io/) virtual avatar.
+
+See [https://docs.livekit.io/agents/integrations/avatar/tavus/](https://docs.livekit.io/agents/integrations/avatar/tavus/) for more information.
+

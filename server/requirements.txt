@@ -1,0 +1,22 @@
+# Core LiveKit packages
+livekit>=1.0.7
+livekit-agents>=1.0.23
+livekit-api==1.0.2
+livekit-protocol==1.0.2
+
+# LiveKit plugins
+livekit-plugins-openai==1.0.18
+livekit-plugins-tavus==1.0.23  # Check for latest version
+
+# FastAPI for token server
+fastapi==0.115.0
+uvicorn==0.32.0
+
+# Environment and utilities
+python-dotenv==1.1.0
+aiohttp==3.11.18
+websockets==15.0.1
+
+# Optional: Additional plugins you might want
+# livekit-plugins-silero==0.7.3  # Voice activity detection
+# livekit-plugins-turn-detector==0.1.0  # Better turn detection
