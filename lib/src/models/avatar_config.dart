@@ -26,8 +26,8 @@ class TavusAvatarConfig {
   const TavusAvatarConfig({
     required this.tokenUrl,
     this.livekitUrl,
-    this.roomName = 'tavus-avatar-room',
-    this.userIdentity = 'flutter-user',
+    this.roomName = '',
+    this.userIdentity = '',
     this.enableLogging = true,
     this.connectionTimeout = const Duration(seconds: 30),
     this.avatarProperties,

@@ -44,7 +44,7 @@ class _AvatarDemoState extends State<AvatarDemo> with SingleTickerProviderStateM
     avatar = TavusAvatar(
       config: TavusAvatarConfig(
         tokenUrl: 'http://localhost:8080/token',
-        roomName: 'tavus-avatar-livekit-room',
+        roomName: '',
         enableLogging: true,
       ),
     );

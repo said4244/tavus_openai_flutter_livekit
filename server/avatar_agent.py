@@ -11,6 +11,9 @@ import os
 import logging
 import asyncio
 
+from openai.types.beta.realtime.session import  InputAudioTranscription, TurnDetection
+
+
 # Load environment variables
 load_dotenv()
 
@@ -79,9 +82,21 @@ async def entrypoint(ctx: agents.JobContext):
         # Create OpenAI model
         logger.info("Step 5: Creating OpenAI Realtime model...")
         realtime_model = openai.realtime.RealtimeModel(
-            model="gpt-4o-realtime-preview",
-            voice="alloy",
-            temperature=0.8,
+            model="gpt-4o-realtime-preview-2024-12-17",
+            voice="echo",
+            api_key="***REMOVED-OPENAI-KEY***",
+            input_audio_transcription=InputAudioTranscription(
+                model="gpt-4o-transcribe",
+                language="en",
+                prompt="expect informal conversational speech",
+            ),
+            temperature=1.0,
+            turn_detection=TurnDetection(
+                type="semantic_vad",
+                eagerness="auto",
+                create_response=True,
+                interrupt_response=True,
+            ),
         )
         logger.info("  - RealtimeModel created successfully")
         
@@ -115,9 +130,6 @@ async def entrypoint(ctx: agents.JobContext):
         
         # Generate initial greeting
         logger.info("Step 10: Generating initial greeting...")
-        await session.generate_reply(
-            instructions="Greet the user warmly. Say something like 'Hello! I can see you're connected. How can I help you today?'"
-        )
         logger.info("  - Initial greeting sent")
         
         logger.info("="*60)

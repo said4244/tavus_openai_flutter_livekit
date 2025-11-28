@@ -11,6 +11,8 @@ import os
 from dotenv import load_dotenv
 import logging
 import json
+import subprocess
+import psutil
 
 # Load environment variables
 load_dotenv()
@@ -47,19 +49,28 @@ else:
 
 @app.get("/token")
 async def create_token(
-    identity: str = "flutter-user",
-    room: str = "tavus-avatar-room"
+    identity: str = None,
+    room: str = None
 ):
     """
     Generate a token for connecting to LiveKit room with Tavus avatar
     
     Args:
-        identity: User identifier (default: flutter-user)
-        room: Room name to join (default: tavus-avatar-room)
+        identity: User identifier (optional)
+        room: Room name to join (optional)
     
     Returns:
         JSON with accessToken and connection details
     """
+    
+    # Get and increment counter from file
+    counter = increment_counter()
+    
+    # Generate default values if none provided
+    if identity is None:
+        identity = f"avatar-user-{counter}"
+    if room is None:
+        room = f"avatar-room-{counter}"
     
     if not LIVEKIT_API_KEY or not LIVEKIT_API_SECRET:
         raise HTTPException(
@@ -98,6 +109,9 @@ async def create_token(
         jwt_token = token.to_jwt()
         
         logger.info(f"Token generated for {identity} in room {room}")
+        
+        # Start new agent for this room
+        await start_new_agent(room)
         
         return {
             "accessToken": jwt_token,
@@ -179,6 +193,58 @@ async def list_rooms():
             status_code=500,
             detail=f"Failed to list rooms: {str(e)}"
         )
+
+
+# Add these globals after the existing globals
+current_agent_process = None
+current_room_name = None
+
+# Add these new functions after the globals
+def get_counter():
+    try:
+        with open('counter.txt', 'r') as f:
+            return int(f.read().strip())
+    except FileNotFoundError:
+        with open('counter.txt', 'w') as f:
+            f.write('1')
+        return 1
+
+def increment_counter():
+    counter = get_counter()
+    counter += 1
+    with open('counter.txt', 'w') as f:
+        f.write(str(counter))
+    return counter
+
+async def start_new_agent(room_name: str):
+    """Start a new Avatar agent for a specific room in a new terminal window"""
+    global current_agent_process, current_room_name
+    
+    # Kill existing agent if any
+    if current_agent_process:
+        try:
+            parent = psutil.Process(current_agent_process.pid)
+            for child in parent.children(recursive=True):
+                child.kill()
+            parent.kill()
+            logger.info(f"Killed previous agent in room {current_room_name}")
+        except:
+            pass
+
+    # Start new agent with room name in new terminal
+    cmd = (
+        f'start powershell.exe -NoExit -Command "'
+        f'./venv/Scripts/activate; '
+        f'python -u avatar_agent.py connect --room {room_name}"'
+    )
+    
+    current_agent_process = subprocess.Popen(
+        cmd,
+        shell=True
+    )
+    current_room_name = room_name
+    
+    logger.info(f"Started new Avatar agent for room {room_name} in new terminal")
 
 
 if __name__ == "__main__":
