@@ -19,3 +19,8 @@ server/.env
 
 # System files
 .DS_Store
+
+# Secrets
+.env
+**/.env
+!*.env.example
